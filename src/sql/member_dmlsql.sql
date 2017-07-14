@@ -1,6 +1,6 @@
 --id, password,name,ssn,regdate
 SELECT * FROM Member;
-update MEMBER
-set id='doghit'
-where id = 'dogHit';
-
+SELECT COUNT(*) AS count FROM Member;
+SELECT * FROM Member WHERE name"김철수";
+INSERT INTO Member(id,name,password,ssn,regdate);
+VALUES('','','');

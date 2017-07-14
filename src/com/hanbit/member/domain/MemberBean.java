@@ -33,6 +33,6 @@ public class MemberBean {
 		this.ssn = ssn;
 	}
 	public String toString() {
-		return String.format("이름:%s 아이디:%s 비밀번호:%s 주민번호:%s\n",name,id,password,ssn);
+		return String.format("이름:%s 아이디:%s 비밀번호:%s 주민번호:%s 날짜:%s \n",name,id,password,ssn,regdate);
 	}
 }

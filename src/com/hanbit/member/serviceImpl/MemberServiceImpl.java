@@ -1,7 +1,9 @@
 package com.hanbit.member.serviceImpl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.hanbit.member.dao.MemberDAO;
 import com.hanbit.member.daoImpl.MemberDAOImpl;
@@ -10,33 +12,30 @@ import com.hanbit.member.sevice.MemberService;
 
 public class MemberServiceImpl implements MemberService {
 	int count;
+	Map<String, MemberBean> map;
 	MemberBean member;
 	List<MemberBean> list;
 
 	public MemberServiceImpl() {
+		map = new HashMap<>();
 		count = 0;
 		member = new MemberBean();
 		list = new ArrayList<>();
 	}
 
 	@Override
-	public void addMember(MemberBean member) {
-		list.add(member);
-		count++;
+	public String addMember(MemberBean member) {
+		return  (new MemberDAOImpl().insert(member)==1)?"success":"fail";
 	}
 
 	@Override
 	public int count() {
-		return count;
+		return new MemberDAOImpl().count();
 	}
 
 	@Override
 	public List<MemberBean> list() {
-		MemberBean bean= new MemberBean();
-		List<MemberBean> list = new ArrayList<MemberBean>();
-		MemberDAO dao = new MemberDAOImpl();
-		list = dao.selectAll();
-		return list;
+		return new MemberDAOImpl().selectAll();
 	}
 
 	@Override
@@ -49,48 +48,37 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public List<MemberBean> findByName(String name) {
-		int count = 0;
-		List<MemberBean> members = new ArrayList<MemberBean>(count);
-
-		for (MemberBean m : list) {
-			if (name.equals(m.getName())) {
-				count++;
-			}
-		}
-		int j = 0;
-		for (MemberBean m : list) {
-			if (name.equals(m.getName())) {
-				members.add(m);
-				j++;
-			}
-			if (count == j) {
-				break;
-			}
-		}
-		return members;
+		
+		return new MemberDAOImpl().selectByName(name);
 	}
 
 	@Override
-	public void modify(MemberBean bean) {
-		for(MemberBean m:list){
-			if(bean.getId().equals(m.getId())){
-				if(!bean.getName().equals("")){
+	public String modify(MemberBean bean) {
+		String msg ="";
+		for (MemberBean m : list) {
+			if (bean.getId().equals(m.getId())) {
+				if (!bean.getName().equals("")) {
 					m.setName(bean.getName());
-				}if(!bean.getPassword().equals("")){
+				}
+				if (!bean.getPassword().equals("")) {
 					m.setPassword(bean.getPassword());
-				}if(!bean.getSsn().equals("")){
+				}
+				if (!bean.getSsn().equals("")) {
 					m.setSsn(bean.getSsn());
 				}
 			}
 		}
+		return msg;
 	}
 
 	@Override
-	public void remove(String deleteId) {
-		for (int i=0;i<list.size();i++) {
+	public String remove(String deleteId) {
+		String msg ="";
+		for (int i = 0; i < list.size(); i++) {
 			if (deleteId.equals(list.get(i).getId())) {
 				list.remove(list.get(i));
 			}
 		}
+		return msg;
 	}
 }

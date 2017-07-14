@@ -28,12 +28,11 @@ public class MemberController {
 			case ADD:
 				// 회원가입
 				bean = new MemberBean();
-				bean.setName(JOptionPane.showInputDialog("name?"));
 				bean.setId(JOptionPane.showInputDialog("id??"));
+				bean.setName(JOptionPane.showInputDialog("name?"));
 				bean.setPassword(JOptionPane.showInputDialog("pass??"));
 				bean.setSsn(JOptionPane.showInputDialog("ssn??"));
-				service.addMember(bean);
-				JOptionPane.showMessageDialog(null, "회원가입 성공");
+				JOptionPane.showMessageDialog(null,service.addMember(bean));
 				break flag;
 			case LIST:
 				JOptionPane.showMessageDialog(null, service.list());
